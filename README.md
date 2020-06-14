@@ -7,15 +7,15 @@ import (
 )
 
 func main() {
-  // 添加一些向量
-  // AddConnect(src,des,pow)
-  // src -> des
+  	// 添加一些向量
+  	// AddConnect(src,des,pow)
+  	// src -> des
 	Dijkstra.Drawings.AddConnect(0, 1, 6)
 	Dijkstra.Drawings.AddConnect(0, 2, 2)
 	Dijkstra.Drawings.AddConnect(2, 1, 3)
 	Dijkstra.Drawings.AddConnect(1, 3, 1)
 	Dijkstra.Drawings.AddConnect(2, 3, 5)
-  // Run(start) 启动 以start为点寻找到各个点权重最小的路径and权位 
+  	// Run(start) 启动 以start为点寻找到各个点权重最小的路径and权位 
 	Dijkstra.Drawings.Run(0)
 }
 ```
@@ -24,14 +24,14 @@ func main() {
 ```go
  func main() {
 	// 添加新的障碍点
-  // 这里是二维矩阵
-  // AddObstacles(x,y,tag)
-  // 分别对应x,y坐标以及设置的tag
+  	// 这里是二维矩阵
+  	// AddObstacles(x,y,tag)
+  	// 分别对应x,y坐标以及设置的tag
 	Matrix.AddObstacles(1, 0, 2)
 	Matrix.AddObstacles(1, 1, 2)
 	Matrix.AddObstacles(1, 2, 2)
-  // Run(startX,startY,endX,endY)
-  // 分别对应起点终点坐标
+  	// Run(startX,startY,endX,endY)
+  	// 分别对应起点终点坐标
 	Matrix.Run(0, 0, 0, 0)
 }
 ```
@@ -50,7 +50,7 @@ func main() {
 	--------------------------
  1	5 | 1 | 1 | 0 | 0 | 0 |
 	--------------------------
- 2	2 | p | 1 | 0 | 2 | 9 |
+ 2	2 | 1 | 1 | 0 | 2 | 9 |
 	--------------------------
  3	2 | 1 | 1 | 0 | 2 | 0 |
 	--------------------------
@@ -86,7 +86,7 @@ func main() {
 ```
 ```go
 // .aStar
-// 不同与 .choiceSlice 在这里可以实现一些其他的功能 例如没有最优解会指派到一些临时处理口 例如高速公路上的一些应急口?
+	// 不同与 .choiceSlice 在这里可以实现一些其他的功能 例如没有最优解会指派到一些临时处理口 例如高速公路上的一些应急口?
 	for {
 		// c、搜寻点P所有邻近点，假如某邻近点既没有在开放列表或封闭列表里面，则计算出该邻近点的F值，并设父节点为P，然后将其放入开放列表
 		m.scoutPath(now, end, &opens, &closes)
