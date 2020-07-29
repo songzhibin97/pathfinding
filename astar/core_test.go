@@ -5,7 +5,7 @@
 package astar
 
 import (
-	"reflect"
+	"fmt"
 	"testing"
 )
 
@@ -15,13 +15,12 @@ func Test_matrix_Run(t *testing.T) {
 	// 添加新的障碍点
 	Matrix.AddObstacles(1, 0, 2)
 	Matrix.AddObstacles(1, 1, 2)
-	Matrix.AddObstacles(1, 2, 2)
-	got, ok := Matrix.Run(0, 0, 0, 0)
-	if !ok {
-		return
+	Matrix.AddObstacles(1, 3, 2)
+
+	got, ok := Matrix.Run(0, 0, 2, 0)
+	fmt.Println(ok)
+	for _, g := range got {
+		fmt.Println(g)
 	}
-	want := []*point{&point{X: 0, Y: 0}}
-	if !reflect.DeepEqual(want,got) {
-		 t.Errorf("excepted:%v, got:%v", want, got) // 测试失败输出错误提示
-	}
+
 }

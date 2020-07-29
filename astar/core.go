@@ -30,16 +30,16 @@ var Matrix matrix
 
 const (
 	// X轴
-	row = 4
+	XAxis = 4
 	// Y轴
-	column = 4
+	YAxis = 4
 )
 
 // 初始化地图
 func init() {
-	Matrix = make([][]int, row)
+	Matrix = make([][]int, YAxis)
 	for i, _ := range Matrix {
-		(Matrix)[i] = make([]int, column)
+		(Matrix)[i] = make([]int, XAxis)
 	}
 }
 
@@ -165,19 +165,20 @@ func (m *matrix) deleteSlice(index int, opens *[]*point) {
 	if index < 0 {
 		return
 	}
+	newOpens := make([]*point, len(*opens)-1)
 	if index == 0 {
-		newOpens := make([]*point, len(*opens)-1)
 		copy(newOpens, (*opens)[1:])
 		*opens = newOpens
 		return
 	}
 	if index == len(*opens) {
-		newOpens := make([]*point, len(*opens)-1)
 		copy(newOpens, (*opens)[:len(*opens)-1])
 		*opens = newOpens
 		return
 	}
-	*opens = (*opens)[:copy(*opens, (*opens)[index:])]
+	copy(newOpens, (*opens)[:index])
+	copy(newOpens[index:], (*opens)[index+1:])
+	*opens = newOpens
 }
 
 // 探路
@@ -220,7 +221,7 @@ func (m *matrix) choiceSlice(now, end *point, opens, closes *[]*point, lock *syn
 			continue
 		}
 		lock.Lock()
-		if (*m)[point.X][point.Y] == 0 {
+		if (*m)[point.Y][point.X] == 0 {
 			// 将其放到 opens
 			index, ok := m.isInSlice(point, opens)
 			// 判断是否存在于opens中
@@ -256,7 +257,7 @@ func (m *matrix) isInSlice(node *point, slices *[]*point) (int, bool) {
 
 // 判断point节点是否有效
 func (m *matrix) isValid(point *point) bool {
-	if point.X < 0 || point.X >= row || point.Y < 0 || point.Y >= column || (*m)[point.X][point.Y] != 0 {
+	if point.X < 0 || point.X >= XAxis || point.Y < 0 || point.Y >= YAxis || (*m)[point.Y][point.X] != 0 {
 		return false
 	}
 	return true
@@ -264,7 +265,7 @@ func (m *matrix) isValid(point *point) bool {
 
 // 判断point节点是否有
 func (m *matrix) isExist(point *point) bool {
-	if point.X < 0 || point.X >= row || point.Y < 0 || point.Y >= column {
+	if point.X < 0 || point.X >= XAxis || point.Y < 0 || point.Y >= YAxis {
 		return false
 	}
 	return true
@@ -273,10 +274,10 @@ func (m *matrix) isExist(point *point) bool {
 // node设置
 func (m *matrix) AddObstacles(x, y int, tag int) bool {
 	// 判断x,y是否合法
-	if x < 0 || y < 0 || x >= row || y >= column {
+	if x < 0 || y < 0 || x >= XAxis || y >= YAxis {
 		return false
 	}
-	Matrix[x][y] = tag
+	Matrix[y][x] = tag
 	return true
 }
 
@@ -324,7 +325,7 @@ func (m *matrix) quickSort(start, end int, opens *[]*point) {
 
  0 - 1 - 2 - 3 - 4 - 5 - 6
 	--------------------------
- 1	5 | 1 | 1 | 0 | 0 | 0 |
+ 1	2 | 1 | 1 | 0 | 0 | 0 |
 	--------------------------
  2	2 | p | 1 | 0 | 2 | 9 |
 	--------------------------
